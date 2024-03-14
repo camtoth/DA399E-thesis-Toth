@@ -3,7 +3,7 @@ const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
 
-const {createDBConnection, getMovies} = require('./database')
+const {createDBConnection, getMovies, getMovieByTitle} = require('./database')
 
 // *** Routes *** //
 
@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
 app.get('/movies', async (req, res) => {
     let movies = await getMovies()
     res.json(movies)
+})
+
+app.get('/movies/:title', async (req, res) => {
+    let movie = await getMovieByTitle(req.params.title)
+    res.json(movie)
 })
 
 app.listen(3000, ()=>{

@@ -99,5 +99,9 @@ function createDBConnection() {
 async function getMovies() {
     return await findAll(movie)
 }
+
+async function getMovieByTitle(title) {
+    return await movie.findOne({'title': title})
+}
     
-module.exports = {createDBConnection, getMovies}
+module.exports = {createDBConnection, getMovies, getMovieByTitle}
