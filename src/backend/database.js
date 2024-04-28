@@ -85,7 +85,7 @@ const movieSchema = new mongoose.Schema({
 const movie = mongoose.model('Movies', movieSchema, 'movies')
 
 async function findAll(model) {
-    let movieResult = await model.find()
+    let movieResult = await model.find().limit(10) //just for debugging purposes, to only work with a handful of movies 
     return movieResult
 }
 
