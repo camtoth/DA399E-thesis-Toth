@@ -38,6 +38,9 @@ const showtimesSchema = new mongoose.Schema({
 const theaterSchema = new mongoose.Schema({
     name:{
         type:String
+    },
+    city:{
+        type:String
     }
 }, {collection: 'theaters'})
 

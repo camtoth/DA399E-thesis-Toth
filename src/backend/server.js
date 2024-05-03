@@ -60,6 +60,7 @@ app.get('/showtimes/cinemas/:theaterid', async (req, res) => {
 
 app.get('/cinemas', async (req, res) => {
     let cinemas = await getAllTheaters()
+    cinemas.sort((a, b) => a.city.localeCompare(b.city))
     res.json(cinemas)
 })
 
