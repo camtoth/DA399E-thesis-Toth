@@ -19,7 +19,7 @@ app.use(express.static('../frontend/styles', {
     }
 }))
 
-const {createDBConnection, getMovies, getMovieByTitle} = require('./database')
+const {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId} = require('./database')
 
 // *** Routes *** //
 
@@ -43,6 +43,20 @@ app.get('/movies/:title', async (req, res) => {
     res.json(movie)
 })
 
+app.get('/showtimes/movies/:movieid', async (req, res) => {
+    let showtimes = await getShowtimesByMovieId(req.params.movieid)
+    res.json(showtimes)
+})
+
+app.get('/showtimes/cinemas/:theaterid', async (req, res) => {
+    let showtimes =  await getShowtimesByTheaterId(req.params.theaterid)
+    res.json(showtimes)
+})
+
+app.get('/showtimes', async (req, res) => {
+    let showtimes = await getAllShowtimes()
+    res.json(showtimes)
+})
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Node API is running on port ${process.env.PORT}`)

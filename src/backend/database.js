@@ -1,91 +1,47 @@
+const { ObjectId } = require('mongodb')
 const mongoose = require('mongoose')
 
 const movieSchema = new mongoose.Schema({
-    plot:{
-        type:String
-    } ,
-    genres:[{
-        type:String
-    }],
-    runtime:{
-        type:Number
-    },
-    cast:[{
-        type: String
-    }],
-    num_mflix_comments:{
-        type: Number
-    },
     title:{
-        type: String
-    },
-    countries:[{
-        type: String
-    }],
-    released:{
-        type: Date
-    },
-    directors:[{
-        type: String
-    }],
-    rated:{
-        type: String
-    },
-    awards:{
-        wins:{
-            type: Number
-        },
-        nominations: {
-            type: Number
-        },
-        text: {
-            type: String
-        }
-    },
-    lastupdated:{
-        type: String
+        type:String
     },
     year: {
-        type: Number
+        type:String
+    }, 
+    length:{
+        type:String
     },
-    imdb:{
-        rating: {
-            type: Number
-        },
-        votes:{
-            type: Number
-        },
-        id:{
-            type: Number
-        }
+    title:{
+        type:String
     },
-    type: {
-        type: String
+    poster:{
+        type:String
     },
-    tomatoes:{
-        viewer:{
-            rating: {
-                type: Number
-            },
-            numReviews:{
-                type: Number
-            },
-            meter:{
-                type: Number
-            }
-        },
-        lastupdated: {
-            type:Date
-        }
+    description:{
+        type:String
     }
-
-
+    
 }, {collection: 'movies'})
 
+const showtimesSchema = new mongoose.Schema({
+    time:{
+        type:Date
+    },
+    movie_id: {
+        type:ObjectId
+    }, 
+    theater_id:{
+        type:ObjectId
+    }
+}, {collection: 'showtimes'})
+
+
 const movie = mongoose.model('Movies', movieSchema, 'movies')
+const showtime = mongoose.model('Showtimes', movieSchema, 'showtimes')
+
 
 async function findAll(model) {
-    let movieResult = await model.find().limit(10) //just for debugging purposes, to only work with a handful of movies 
+    let movieResult = await model.find() 
     return movieResult
 }
 
@@ -103,5 +59,27 @@ async function getMovies() {
 async function getMovieByTitle(title) {
     return await movie.findOne({'title': title})
 }
+
+async function getAllShowtimes() {
+    return await findAll(showtime)
+}
+
+async function getShowtimesByMovieId(movieId) {
+    try{
+        movieId = new mongoose.Types.ObjectId(String(movieId))
+        return await showtime.find({'movie_id': movieId})
+    } catch {
+        console.error("Invalid id format")
+    }
+}
+
+async function getShowtimesByTheaterId(theaterId) {
+    try {
+        theaterId = new mongoose.Types.ObjectId(String(theaterId))
+        return await showtime.find({'theater_id': theaterId})
+    } catch {
+        console.error("Invalid id format")
+    }
+}
     
-module.exports = {createDBConnection, getMovies, getMovieByTitle}
+module.exports = {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId}
