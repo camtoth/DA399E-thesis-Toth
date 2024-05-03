@@ -11,11 +11,13 @@ async function getJsonDataFromEndpoint(APIendpoint) {
 }
 
 function goToMovieDetails(e) {
+    sessionStorage.setItem("selectedMovie", e.currentTarget.title)
     window.location.href = `/movies/${e.currentTarget.title}` 
 }
 
 function selectCinema(e) {
     selectedCinema = cinemas.find((cinema) => cinema.name == e.currentTarget.value);
+    sessionStorage.setItem("selectedCinemaId", selectedCinema._id)
     window.location.href = `/#${e.currentTarget.value}}`
     filterMoviesByCinema()
 }

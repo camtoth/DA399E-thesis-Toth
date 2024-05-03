@@ -38,14 +38,16 @@ app.get('/movies', async (req, res) => {
 })
 
 app.get('/movies/:title', async (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/movie_details.html'))
+})
+
+app.get('/movies/:title/details', async (req, res) => {
     let movie = await getMovieByTitle(req.params.title)
-    //populate the html with correct data and return it
     res.json(movie)
 })
 
 app.get('/movies/cinema/:cinemaid', async (req, res) => {
     let movies = await getMoviesByCinema(req.params.cinemaid)
-    console.log(movies)
     //populate the html with correct data and return it
     res.json(movies)
 })
@@ -56,7 +58,10 @@ app.get('/showtimes', async (req, res) => {
 })
 
 app.get('/showtimes/movies/:movieid', async (req, res) => {
+    console.log("HERE"
+    )
     let showtimes = await getShowtimesByMovieId(req.params.movieid)
+    console.log(showtimes)
     res.json(showtimes)
 })
 
