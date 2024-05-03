@@ -1,6 +1,7 @@
 //global variables
 let movies = []
 let cinemas = []
+let selectedCinema = ''
 
 async function getJsonDataFromEndpoint(APIendpoint) {
     const response = await fetch(`../${APIendpoint}`)
@@ -11,6 +12,11 @@ async function getJsonDataFromEndpoint(APIendpoint) {
 
 function goToMovieDetails(e) {
     window.location.href = `/movies/${e.currentTarget.title}` 
+}
+
+function selectCinema(e) {
+    selectedCinema = cinemas.find((cinema) => cinema.name == e.currentTarget.value);
+    window.location.href = `/#${e.currentTarget.value}}`
 }
 
 function renderMovies() {
@@ -46,7 +52,7 @@ function renderCinemas() {
             `
     })
     htmlToRender += '</optgroup>'
-    htmlDiv.innerHTML = htmlToRender
+    htmlDiv.innerHTML += htmlToRender
 }
 
 function initMovieEventListeners() {
@@ -57,12 +63,22 @@ function initMovieEventListeners() {
     })
 }
 
+function initCinemaListEventListeners() {
+    const cinemasList = document.getElementById('js-cinemaslist')
+    cinemasList.addEventListener('change', selectCinema, false)
+}
+
 async function init() {
     movies = await getJsonDataFromEndpoint('movies')
     cinemas = await getJsonDataFromEndpoint('cinemas')
+
+    //render and populate html
     renderMovies()
     renderCinemas()
+
+    //init listeners, must be done after render
     initMovieEventListeners()
+    initCinemaListEventListeners()
 }
 
 init()
