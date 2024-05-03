@@ -17,19 +17,29 @@ function goToMovieDetails(e) {
 function selectCinema(e) {
     selectedCinema = cinemas.find((cinema) => cinema.name == e.currentTarget.value);
     window.location.href = `/#${e.currentTarget.value}}`
+    filterMoviesByCinema()
+}
+
+async function filterMoviesByCinema() {
+    movies =  await getJsonDataFromEndpoint(`movies/cinema/${selectedCinema._id}`)
+    //triggers a recomposition of the movies component
+    renderMovies()
+    initMovieEventListeners()
 }
 
 function renderMovies() {
     const htmlDiv = document.getElementById('js-moviescontainer')
     let htmlToRender = ''
-    movies.forEach(movie => {
-        htmlToRender += `
-                <span id = ${movie._id} title = "${movie.title}" class ="movie-preview"> 
-                    <div>Title: ${movie.title}</div>
-                    <img src=${movie.poster} alt="Poster for ${movie.title}">
-                </span>
-            `
-    })
+    if(movies.length > 0) {
+        movies.forEach(movie => {
+            htmlToRender += `
+                    <div id = ${movie._id} title = "${movie.title}" class ="movie-preview"> 
+                        <div>Title: ${movie.title}</div>
+                        <img src=${movie.poster} alt="Poster for ${movie.title}">
+                    </div>
+                `
+        })
+    }
     htmlDiv.innerHTML = htmlToRender
 }
 
