@@ -35,10 +35,15 @@ const showtimesSchema = new mongoose.Schema({
     }
 }, {collection: 'showtimes'})
 
+const theaterSchema = new mongoose.Schema({
+    name:{
+        type:String
+    }
+}, {collection: 'theaters'})
 
 const movie = mongoose.model('Movies', movieSchema, 'movies')
 const showtime = mongoose.model('Showtimes', movieSchema, 'showtimes')
-
+const theater = mongoose.model('Theaters', theaterSchema, 'theaters')
 
 async function findAll(model) {
     let movieResult = await model.find() 
@@ -82,4 +87,8 @@ async function getShowtimesByTheaterId(theaterId) {
     }
 }
     
-module.exports = {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId}
+async function getAllTheaters() {
+    return await findAll(theater)
+}
+
+module.exports = {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters}

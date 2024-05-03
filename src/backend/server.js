@@ -19,7 +19,7 @@ app.use(express.static('../frontend/styles', {
     }
 }))
 
-const {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId} = require('./database')
+const {createDBConnection, getMovies, getMovieByTitle, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters} = require('./database')
 
 // *** Routes *** //
 
@@ -43,6 +43,11 @@ app.get('/movies/:title', async (req, res) => {
     res.json(movie)
 })
 
+app.get('/showtimes', async (req, res) => {
+    let showtimes = await getAllShowtimes()
+    res.json(showtimes)
+})
+
 app.get('/showtimes/movies/:movieid', async (req, res) => {
     let showtimes = await getShowtimesByMovieId(req.params.movieid)
     res.json(showtimes)
@@ -53,9 +58,9 @@ app.get('/showtimes/cinemas/:theaterid', async (req, res) => {
     res.json(showtimes)
 })
 
-app.get('/showtimes', async (req, res) => {
-    let showtimes = await getAllShowtimes()
-    res.json(showtimes)
+app.get('/cinemas', async (req, res) => {
+    let cinemas = await getAllTheaters()
+    res.json(cinemas)
 })
 
 app.listen(process.env.PORT, ()=>{
