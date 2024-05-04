@@ -19,7 +19,7 @@ app.use(express.static('../frontend/styles', {
     }
 }))
 
-const {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters} = require('./database')
+const {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters, generateShowtimeForMovieAtCinema} = require('./database')
 
 // *** Routes *** //
 
@@ -58,8 +58,6 @@ app.get('/showtimes', async (req, res) => {
 })
 
 app.get('/showtimes/movies/:movieid', async (req, res) => {
-    console.log("HERE"
-    )
     let showtimes = await getShowtimesByMovieId(req.params.movieid)
     console.log(showtimes)
     res.json(showtimes)
@@ -75,6 +73,12 @@ app.get('/cinemas', async (req, res) => {
     cinemas.sort((a, b) => a.city.localeCompare(b.city))
     res.json(cinemas)
 })
+
+app.get('/generate/showtimes/:movieTitle/:cinemaName', async (req, res) => {
+    await generateShowtimeForMovieAtCinema(req.params.movieTitle, req.params.cinemaName)
+    res.status(200)
+})
+
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Node API is running on port ${process.env.PORT}`)

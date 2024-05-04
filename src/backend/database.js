@@ -1,5 +1,18 @@
 const { ObjectId } = require('mongodb')
 const mongoose = require('mongoose')
+const moment = require('moment');
+const showtimesList = [
+    "11",
+    "14:30",
+    "16:30",
+    "18",
+    "18:30",
+    "19",
+    "19:30",
+    "20",
+    "20:30",
+    "21:30"
+];
 
 const movieSchema = new mongoose.Schema({
     title:{
@@ -108,4 +121,54 @@ async function getAllTheaters() {
     return await findAll(theater)
 }
 
-module.exports = {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters}
+async function generateShowtimeForMovieAtCinema(movieTitle, theaterName) { // only for development purporses, will populate the db with showtimes automatically
+    try{
+      const movieToInsert = await movie.findOne({ title: movieTitle });
+      const theaterToInsert = await theater.findOne({ name: theaterName });
+
+      // Calculate the start date (2 days from now)
+      const startDate = moment().add(2, 'days').startOf('day');
+
+      // Calculate the end date (1 week from now)
+      const endDate = moment().add(1, 'week').endOf('day');
+
+      // Find existing showtimes for the movie and theater within the date range
+      const existingShowtimes = await showtime.find({
+          movie_id: movieToInsert._id,
+          theater_id: theaterToInsert._id,
+          time: { $gte: startDate.toDate(), $lte: endDate.toDate() }
+      });
+
+      // Extract existing times from existing showtimes
+      const existingTimes = existingShowtimes.map(showtime => moment(showtime.time).format('HH:mm'));
+
+      // Generate showtime entries for specific times in the list, skipping a random time
+      const timeToSkipIndex = Math.floor(Math.random() * showtimesList.length);
+      for (let i = 0; i < showtimesList.length; i++) {
+          if (i === timeToSkipIndex) {
+              continue; // Skip the random time
+          }
+
+          // Parse the time string and add it to the start date
+          const time = showtimesList[i];
+          const showtimeDateTime = moment(`${startDate.format('YYYY-MM-DD')} ${time}`, 'YYYY-MM-DD HH:mm');
+
+          // Check if the showtime is within the date range and not already existing
+          if (showtimeDateTime.isBetween(startDate, endDate, undefined, '[]') && !existingTimes.includes(time)) {
+              const showtimeToInsert = new showtime({
+                  time: showtimeDateTime.toDate(),
+                  movie_id: movieToInsert._id,
+                  theater_id: theaterToInsert._id
+              });
+
+              await showtimeToInsert.save();
+          }
+      }
+
+      console.log('Showtimes generated successfully');
+  } catch (e) {
+      console.error('Error generating showtimes:', e.message);
+  }
+}
+
+module.exports = {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters, generateShowtimeForMovieAtCinema}
