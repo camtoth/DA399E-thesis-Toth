@@ -11,17 +11,30 @@ async function getJsonDataFromEndpoint(APIendpoint) {
 
 function renderMovieDetails() {
     document.getElementById('js-movietitle').innerHTML = movie.title
+    const movieContainerDiv = document.getElementById('js-moviecontainer') 
+    movieContainerDiv.innerHTML = `
+    <div class="card movie-preview"  id = ${movie._id} title = "${movie.title}" style="width: 18rem;">
+        <img src=${movie.poster} class="card-img-top img-fluid" alt="Poster for ${movie.title}">
+        <div class="card-body">
+            <h5 class="card-title">${movie.title}</h5>
+            <p class="card-text">
+                Year: ${movie.year}
+                Runtime: ${movie.length}
+                Synopsis: ${movie.description}
+            </p>
+        </div>
+    </div>`
 }
 
 function renderShowtimes() {
     let showtimesDiv = document.getElementById('js-showtimescontainer')
     let htmlToRender = ''
     showtimes.forEach(showtime => {
-        if(showtime.theater_id == selectedCinemaId) { //only render showtimes for current cinema
+        if(showtime.theater_id == selectedCinemaId || selectedCinemaId === '') { //only render showtimes for current cinema
             htmlToRender+= `
-            <button id= '${showtime._id}'>
+            <input type="checkbox" id= '${showtime._id}'>
                 ${showtime.time} 
-            </div>
+            </input>
         `
         }
     })
