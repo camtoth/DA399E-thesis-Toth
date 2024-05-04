@@ -79,7 +79,7 @@ app.get('/generate/showtimes/:movieTitle/:cinemaName', async (req, res) => { //f
     res.status(200)
 })
 
-app.get('/generate/showtimes/all/:cinemaName', async (req, res) => { //for dev purposes only
+app.get('/generate/showtimes-all/:cinemaName', async (req, res) => { //for dev purposes only
     await generateShowtimesForAllMoviesAtCinema(req.params.cinemaName)
     res.status(200)
 })

@@ -36,7 +36,7 @@ function renderMovies() {
         movies.forEach(movie => {
             htmlToRender += `
             <div class="col">
-                <div class="card movie-preview shadow"  id = ${movie._id} title = "${movie.title}" style="width: 18rem;">
+                <div class="card movie-preview shadow mt-3 mb-3"  id = ${movie._id} title = "${movie.title}" style="width: 18rem;">
                     <img src=${movie.poster} class="card-img-top img-fluid" alt="Poster for ${movie.title}">
                     <div class="card-body">
                         <h5 class="card-title">${movie.title}</h5>
@@ -55,16 +55,13 @@ function renderCinemas() {
     let htmlToRender = ''
     let lastCity = ''
     cinemas.forEach(cinema => {
-        if(lastCity == '') {     //first element
-            htmlToRender += `<optgroup label = "${cinema.city}">`
-        } else if(lastCity != cinema.city) {
-            htmlToRender += `</optgroup>
-            <optgroup label = "${cinema.city}">`
+        if(lastCity != cinema.city) {     //first element
+            htmlToRender += `<hr><option id=${cinema._id} value="${cinema.name}">${cinema.city}</option>`
         } 
         lastCity = cinema.city
         htmlToRender += `
                 <option id=${cinema._id} value="${cinema.name}" class="cinema-list-element"> 
-                    ${cinema.name} (${cinema.city})
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${cinema.name} (${cinema.city})
                 </option>
             `
     })
@@ -83,6 +80,8 @@ function initMovieEventListeners() {
 function initCinemaListEventListeners() {
     const cinemasList = document.getElementById('js-cinemaslist')
     cinemasList.addEventListener('change', selectCinema, false)
+
+    
 }
 
 async function init() {

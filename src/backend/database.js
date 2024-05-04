@@ -141,9 +141,10 @@ async function generateShowtimeForMovieAtCinema(movieTitle, theaterName) { // on
 }
 
 async function generateShowtimesForAllMoviesAtCinema(theaterName) {
-    let movies = await getMovies()
+    let movies = await findAll(movie)
     for(const movie in movies) {
-        generateShowtimeForMovieAtCinema(movieTitle, theaterName)
+        console.log(theaterName)
+        await generateShowtimeForMovieAtCinema(movies[movie].title, theaterName)
     }
 }
 
