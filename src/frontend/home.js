@@ -40,7 +40,7 @@ function renderMovies() {
                     <img src=${movie.poster} class="card-img-top img-fluid" alt="Poster for ${movie.title}">
                     <div class="card-body">
                         <h5 class="card-title">${movie.title}</h5>
-                        <a href="#" class="btn btn-primary" >Go somewhere</a>
+                        <a href="#" class="btn btn-primary" >See showtimes</a>
                     </div>
                 </div>
             </div>
