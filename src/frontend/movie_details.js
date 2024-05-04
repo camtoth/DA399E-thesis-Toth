@@ -40,15 +40,19 @@ function renderShowtimes() {
     let htmlToRender = ''
     for(const day in showtimes) {
         const times = showtimes[day]
-        htmlToRender += `<div> ${day} </div>`
+        htmlToRender += `<div class = "row"> ${day} </div> 
+            <div class = "row my-2"> `
         times.forEach(showtime => {
             //if(showtime.theater_id == selectedCinemaId || selectedCinemaId === '') { //only render showtimes for current cinema
                 htmlToRender+= `
-                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined-${day}-${showtime}" autocomplete="off">
-                <label class="btn btn-outline-danger" for="danger-outlined-${day}-${showtime}">${showtime}</label>
-            `
+                <div class = "col-auto ">
+                    <input type="radio" class="btn-check" name="options-outlined" id="primary-outlined-${day}-${showtime}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="primary-outlined-${day}-${showtime}">${showtime}</label>
+                </div>
+                `
             //}
         })
+        htmlToRender += `</div><hr>`
     }
     showtimesDiv.innerHTML += htmlToRender
 }
@@ -59,9 +63,11 @@ async function init() {
     movie = await getJsonDataFromEndpoint(`movies/${movieTitle}/details`)
     //showtimes = await getJsonDataFromEndpoint(`showtimes/movies/${movie._id}`)
     showtimes = {
+        'Today' : ['11:30', '17:30', '19:30', '21:00'],
+        'Tomorrow': ['11:30', '15:30', '17:30', '19:30', '21:00'],
         'Monday' : ['17:30', '19:00'],
         'Tuesday' : ['17:30', '21:00'],       
-        'Wendsday' : ['21:00'],
+        'Wednesday' : ['21:00'],
         "Thursday" : ['17:30', '19:30', '21:00']
     }
 

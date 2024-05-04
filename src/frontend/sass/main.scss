@@ -2,8 +2,48 @@
 $primary: #de6a00;
 $body-bg: #000000;
 $card-bg: #000000;
+$body-color: #fff;
+$cyan: rgb(255, 255, 255);
+
+$navbar-light-color: rgba(255, 255, 255, .65);
+$navbar-light-hover-color:rgba(255, 255, 255, .8);
+$navbar-light-active-color:rgba(255, 255, 255, 1);
+$navbar-light-disabled-color: rgba(255, 255, 255, .3);
 
 $box-shadow: 0 0 2px rgba(222, 106, 0, 0.9), 0 0 4px rgba(222, 106, 0, 0.4), 0 0 1rem rgba(222, 106, 0, 0.3), 0 0 4rem rgba(222, 106, 0, 0.1);
+
+.big-shadow {
+  --bs-border-opacity: 1;
+  border-color: rgba(255, 193, 7, 1) !important;
+  box-shadow: 0 0 2px rgba(255, 193, 7, 0.9), 0 0 4px rgba(255, 193, 7, 0.4), 0 0 1rem rgba(255, 193, 7, 0.3), 0 0 4rem rgba(255, 193, 7, 0.1);
+}
+
+$input-bg: rgba(0, 0, 0, 0.8);
+
+.logo-typography {
+    font-size: 1.5rem;
+    font-weight: 900;
+    white-space: nowrap;
+    background: rgb(222,106,0);
+    background: linear-gradient(90deg, rgba(222,106,0,1) 20%, rgba(245,255,0,1) 65%, rgba(255,0,61,1) 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    //text-shadow: 0 0 1px rgba(0, 0, 0, 0.6), 0 0 3px rgba(0, 0, 0, 0.5), 0 0 0.5rem rgba(0, 0, 0, 0.3), 0 0 2rem rgba(0, 0, 0, 0.2);
+}
+
+$display-font-sizes: (
+  1: 5rem,
+  2: 4.5rem,
+  3: 4rem,
+  4: 3.5rem,
+  5: 3rem,
+  6: 1.5rem
+);
+
+
+$display-font-family: null;
+$display-font-style:  null;
+$display-font-weight: 300;
 
 //import bootstrap
 @import "~bootswatch/dist/superhero/variables";
