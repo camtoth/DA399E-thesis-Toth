@@ -19,7 +19,7 @@ app.use(express.static('../frontend/styles', {
     }
 }))
 
-const {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters, generateShowtimeForMovieAtCinema} = require('./database')
+const {createDBConnection, getMovies, getMovieByTitle, getMoviesByCinema, getAllShowtimes, getShowtimesByMovieId, getShowtimesByTheaterId, getAllTheaters, generateShowtimeForMovieAtCinema, generateShowtimesForAllMoviesAtCinema} = require('./database')
 
 // *** Routes *** //
 
@@ -74,8 +74,13 @@ app.get('/cinemas', async (req, res) => {
     res.json(cinemas)
 })
 
-app.get('/generate/showtimes/:movieTitle/:cinemaName', async (req, res) => {
+app.get('/generate/showtimes/:movieTitle/:cinemaName', async (req, res) => { //for dev purposes only
     await generateShowtimeForMovieAtCinema(req.params.movieTitle, req.params.cinemaName)
+    res.status(200)
+})
+
+app.get('/generate/showtimes/all/:cinemaName', async (req, res) => { //for dev purposes only
+    await generateShowtimesForAllMoviesAtCinema(req.params.cinemaName)
     res.status(200)
 })
 
