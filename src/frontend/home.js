@@ -46,11 +46,14 @@ function renderMovies() {
             </div>
             `
         })
-        htmlToRender += `
+        if(movies.length > 10) {
+            htmlToRender += `
             <div class="col justify-content-center mt-5">
                     <h1>SEE MORE >></h1>
             </div>
             `
+        }
+        
     }
     htmlDiv.innerHTML = htmlToRender
 }
