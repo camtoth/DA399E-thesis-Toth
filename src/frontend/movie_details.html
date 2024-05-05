@@ -52,11 +52,18 @@
         <div class="row mx-2">
           <div class="col gy-5 shadow">
             <div id="js-moviecontainer" class="row p-4"></div>
+            
             <div class="row">
               <div class="col-9">
+                <div class="row p-4">
+                  <div class="col-7"><select  id="js-cinemaslist" class="form-select form-select-lg big-shadow" style="background-color: rgb(0, 0, 0); color:#fff" name = "cinemas" aria-label="Select example">
+                    <option disabled selected value> -- select your cinema -- </option>
+                  </select></div>
+                </div>
                 <div id="js-showtimescontainer" class="row p-4"></div>  
               </div>
               <div class="col-auto">
+      
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   Purchase ticket
                 </button>
